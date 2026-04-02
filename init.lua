@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = false
 
 vim.o.number = true
 vim.o.relativenumber = true
@@ -31,6 +31,9 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
+vim.o.guicursor = 'n-v-c-i-ci-ve-r-cr-o:block'
+vim.o.laststatus = 0
+vim.o.ruler = false
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -362,16 +365,34 @@ require('lazy').setup({
   },
 
   {
-    'nvim-mini/mini.nvim',
-    config = function()
-      require('mini.ai').setup { n_lines = 500 }
-      require('mini.surround').setup()
-
-      local statusline = require 'mini.statusline'
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function() return '%2l:%-2v' end
-    end,
+    -- 'nvim-mini/mini.nvim',
+    -- config = function()
+    --   require('mini.ai').setup { n_lines = 500 }
+    --   require('mini.surround').setup()
+    --
+    --   local statusline = require 'mini.statusline'
+    --   statusline.setup { use_icons = vim.g.have_nerd_font }
+    --   ---@diagnostic disable-next-line: duplicate-set-field
+    --   statusline.section_location = function() return '%2l:%-2v' end
+    'nvim-lualine/lualine.nvim',
+    opts = {
+      options = {
+        theme = 'auto',
+        section_separators = '',
+        component_separators = '',
+        globalstatus = true,
+      },
+      tabline = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'diagnostics' },
+        lualine_y = {},
+        lualine_z = { 'location' },
+      },
+      sections = {},
+      inactive_sections = {},
+    }, -- end,
   },
 
   {

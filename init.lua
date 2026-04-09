@@ -20,7 +20,7 @@ vim.o.tabstop = 2
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = 'no'
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 vim.o.splitright = true
@@ -32,8 +32,6 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
 vim.o.guicursor = 'n-v-c-i-ci-ve-r-cr-o:block'
-vim.o.laststatus = 0
-vim.o.ruler = false
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -106,10 +104,10 @@ require('lazy').setup({
       delay = 0,
       icons = { mappings = vim.g.have_nerd_font },
       spec = {
-        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+        { '<leader>s', group = '[S]earch',    mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        { 'gr', group = 'LSP Actions', mode = { 'n' } },
+        { '<leader>h', group = 'Git [H]unk',  mode = { 'n', 'v' } },
+        { 'gr',        group = 'LSP Actions', mode = { 'n' } },
       },
     },
   },
@@ -126,7 +124,7 @@ require('lazy').setup({
         cond = function() return vim.fn.executable 'make' == 1 end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       require('telescope').setup {
@@ -159,7 +157,8 @@ require('lazy').setup({
           vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
           vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
           vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-          vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+          vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols,
+            { buffer = buf, desc = 'Open Workspace Symbols' })
           vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
         end,
       })
@@ -183,7 +182,8 @@ require('lazy').setup({
         { desc = '[S]earch [/] in Open Files' }
       )
 
-      vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+      vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end,
+        { desc = '[S]earch [N]eovim files' })
     end,
   },
 
@@ -193,7 +193,7 @@ require('lazy').setup({
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',    opts = {} },
       'saghen/blink.cmp',
     },
     config = function()
@@ -232,13 +232,16 @@ require('lazy').setup({
           end
 
           if client and client:supports_method('textDocument/inlayHint', event.buf) then
-            map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+            map('<leader>th',
+              function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
+              '[T]oggle Inlay [H]ints')
           end
         end,
       })
 
       ---@type table<string, vim.lsp.Config>
       local servers = {
+        clangd = {},
         angularls = {
           cmd = {
             'ngserver',
@@ -377,7 +380,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        theme = 'auto',
+        theme = 'gruvbox_dark',
         section_separators = '',
         component_separators = '',
         globalstatus = true,
@@ -433,6 +436,13 @@ require('lazy').setup({
       })
     end,
   },
+  {
+    'goolord/alpha-nvim',
+    dependencies = { 'nvim-mini/mini.icons' },
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.startify'.config)
+    end
+  },
 }, { ---@diagnostic disable-line: missing-fields
   ui = {
     icons = vim.g.have_nerd_font and {} or {
@@ -453,6 +463,17 @@ require('lazy').setup({
   },
 })
 
+vim.o.laststatus = 0
+vim.o.ruler = false
+--vim.o.showtabline = 0
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   callback = function()
+--     vim.o.laststatus = 0
+--     vim.o.showtabline = 0
+--   end,
+-- })
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
+-- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
 if vim.g.neovide then
   vim.g.neovide_scale_factor = 1
   vim.g.neovide_floating_blur_amount_x = 2.0
@@ -467,5 +488,3 @@ if vim.g.neovide then
   vim.g.neovide_cursor_vfx_particle_speed = 10.0
   vim.g.neovide_show_border = false
 end
-
--- vim: ts=2 sts=2 sw=2 et

@@ -40,7 +40,6 @@ vim.diagnostic.config {
   virtual_lines = false,
   jump = { float = true },
 }
-
 if vim.g.neovide then
   vim.g.neovide_scale_factor = 1
   vim.g.neovide_floating_blur_amount_x = 2.0

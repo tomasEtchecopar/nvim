@@ -2,11 +2,11 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = false
 
-require('config.options')
-require('config.keymaps')
-require('config.autocmds')
-require('config.lazy')
+require 'config.options'
+require 'config.keymaps'
+require 'config.autocmds'
+require 'config.lazy'
 
-vim.cmd.colorscheme("base16-black-metal-bathory")
-vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
-vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
+vim.cmd.colorscheme 'base16-black-metal-bathory'
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
+-- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })

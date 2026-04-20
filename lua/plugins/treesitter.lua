@@ -18,6 +18,7 @@ return {
         'tsx',
         'lua',
         'luadoc',
+        'latex',
         'markdown',
         'markdown_inline',
         'query',

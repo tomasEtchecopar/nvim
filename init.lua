@@ -7,6 +7,6 @@ require 'config.keymaps'
 require 'config.autocmds'
 require 'config.lazy'
 
-vim.cmd.colorscheme 'base16-black-metal-bathory'
+vim.cmd.colorscheme 'wal'
 -- vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
 -- vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })

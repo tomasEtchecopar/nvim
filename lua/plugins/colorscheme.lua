@@ -1,5 +1,5 @@
 return {
-  { "vim-scripts/newsprint.vim" },
+{ "vim-scripts/newsprint.vim" },
   { "gbprod/nord.nvim" },
   { "slugbyte/lackluster.nvim", },
   { "vim-scripts/zenesque.vim", },
